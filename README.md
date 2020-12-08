@@ -4,6 +4,8 @@ Curso de MySQL
 ## Como rodar
 [Windows]
 1. Faça donwload do mysql (5.6) Workbench no link
+https://dev.mysql.com/downloads/windows/installer/5.6.html
+ou
 https://dev.mysql.com/downloads/mysql/5.6.html
 
 [Linux]
@@ -24,3 +26,7 @@ depois instale o compose para gerenciar os containers:
 `docker-compose up` utilze o `-d` caso queira ocultar o log
 `docker-compose up -d`
 Para desligar o container utilize: `docker-compose down`
+
+
+## Verificando a versão do MySQL
+execute o comando: `SELECT @@version;`
