@@ -18,3 +18,11 @@ INTO usuarios
 (nome, email, senha) 
 VALUE 
 ('Victor Luis', 'victorluissantos@live.com', '123456');
+
+
+SELECT 
+    id, nome, email
+FROM
+    usuarios
+WHERE
+	id = 3;

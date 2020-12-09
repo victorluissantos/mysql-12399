@@ -9,4 +9,18 @@ AI - Incremento automático
 G - coluna gerada. ou seja, valor gerado por uma fórmula baseada nas outras colunas
 
 ##Comandos
-SELECT, FROM, INSET INTO, UPDATE, WHERE
+SELECT, FROM, INSET INTO, UPDATE, WHERE<br/>
+CURRENT_TIMESTAMP
+
+
+###Ordem de leitura
+SELECT -- [terceiro]
+FROM -- [primeiro]
+WHERE -- [segundo]
+GROUP BY -- [quarto]
+ORDER -- [quinto]
+LIMIT -- [sexto]
+
+
+[Reference]
+https://www.w3schools.in/mysql/ddl-dml-dcl/
