@@ -39,3 +39,46 @@ FROM
     usuarios
 ORDER BY id DESC
 LIMIT 1;
+
+
+-- Exercicios elance, dia 4
+-- 1. uma lista dos usuários com uma coluna referenciando a quantidade de anuncios que o usuário tem
+SELECT 
+    id,
+    nome,
+    uf,
+    situacao,
+    (SELECT 
+            COUNT(id) AS `total`
+        FROM
+            anuncios
+        WHERE
+            usuario_id = u.id) AS `qtd_anuncios`
+FROM
+    usuarios u;
+
+-- 1.2 uma lista dos usuários com uma coluna referenciando a quantidade de anuncios que o usuário tem, só exibindo quem tem mais de 0
+SELECT 
+    id,
+    nome,
+    uf,
+    situacao,
+    (SELECT 
+            COUNT(id) AS `total`
+        FROM
+            anuncios
+        WHERE
+            usuario_id = u.id) AS `qtd_anuncios`
+FROM
+    usuarios u
+WHERE
+    (SELECT 
+            COUNT(id) AS `total`
+        FROM
+            anuncios
+        WHERE
+            usuario_id = u.id) > 0;
+    
+-- 2 Lista de anuncios que o usuário esta inativo
+
+-- 3 Uma lista dos anuncios dos usuários que  encontram-se inativos
