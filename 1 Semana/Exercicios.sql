@@ -78,7 +78,31 @@ WHERE
             anuncios
         WHERE
             usuario_id = u.id) > 0;
-    
--- 2 Lista de anuncios que o usuário esta inativo
 
--- 3 Uma lista dos anuncios dos usuários que  encontram-se inativos
+-- 2 Lista de anuncios que o usuário esta inativo
+SELECT 
+    *
+FROM
+    anuncios
+WHERE
+    (SELECT 
+            situacao
+        FROM
+            usuarios
+        WHERE
+            id = usuario_id) = 'Inativo';
+
+-- 3 Uma lista dos usuarios com o total/soma de valor mínimo dos anuncios
+SELECT 
+    id,
+    nome,
+    uf,
+    situacao,
+    (SELECT 
+            SUM(valor_minimo)
+        FROM
+            anuncios
+        WHERE
+            usuario_id = u.id) AS `total`
+FROM
+    usuarios u;
