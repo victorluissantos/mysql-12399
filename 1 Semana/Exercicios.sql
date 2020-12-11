@@ -106,3 +106,97 @@ SELECT
             usuario_id = u.id) AS `total`
 FROM
     usuarios u;
+
+
+-- 3.1 Uma lista dos usuarios com o total/soma de valor mínimo dos anuncios, exibindo somente quem tem anuncio
+SELECT 
+    id,
+    nome,
+    uf,
+    situacao,
+    (SELECT 
+            SUM(valor_minimo)
+        FROM
+            anuncios
+        WHERE
+            usuario_id = u.id) AS `total`
+FROM
+    usuarios u
+WHERE
+    (SELECT 
+            SUM(valor_minimo)
+        FROM
+            anuncios
+        WHERE
+            usuario_id = u.id) IS NOT NULL;
+
+
+/* SEGUNDA LEVA DE EXERCICIOS USANDO O JOIN */
+
+-- 1 exibir uma lista de usuários na forma de hanking de quem tem mais valor_minimo
+SELECT 
+    u.nome,
+    COUNT(a.id) as `anuncios`
+FROM
+    usuarios u
+    JOIN
+    anuncios a ON u.id = a.usuario_id
+GROUP BY u.id
+ORDER BY 2 DESC;
+
+-- 1.1 exibir uma lista de usuários na forma de hanking de quem tem mais anuncios ativos
+SELECT 
+    u.nome, COUNT(a.id) AS `total`
+FROM
+    usuarios u
+        JOIN
+    anuncios a ON u.id = a.usuario_id
+WHERE
+    a.situacao = 'Ativo'
+GROUP BY u.id
+ORDER BY 2 DESC;
+
+-- 2 qual o Estado que mais tem usuários cadastrados e ativos
+SELECT
+    u.uf,
+    COUNT(u.id) as `total`
+FROM
+    usuarios u
+WHERE
+    u.situacao = 'Ativo'
+GROUP BY u.uf
+ORDER BY 2 DESC;
+
+
+-- 2.2 qual o Estado que mais tem usuários cadastrados e inativos
+SELECT
+    u.uf,
+    COUNT(u.id) as `total`
+FROM
+    usuarios u
+WHERE
+    u.situacao = 'Inativo'
+GROUP BY u.uf
+ORDER BY 2 DESC;
+
+-- 2.3 qual o Estado que mais tem usuários com anuncio
+SELECT
+    u.uf,
+    COUNT(a.id) as `total`
+FROM
+    usuarios u
+    JOIN
+    anuncios a ON u.id = a.usuario_id
+GROUP BY u.uf
+ORDER BY 2 DESC;
+
+-- 2.3 qual o Estado que mais tem valor_minimo
+SELECT
+    u.uf,
+    SUM(a.valor_minimo) as `soma_total`
+FROM
+    usuarios u
+    JOIN
+    anuncios a ON u.id = a.usuario_id
+GROUP BY u.uf
+ORDER BY 2 DESC;
