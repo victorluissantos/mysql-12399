@@ -187,16 +187,16 @@ FROM
     usuarios u
     JOIN
     anuncios a ON u.id = a.usuario_id
-GROUP BY u.uf
+GROUP BY 1
 ORDER BY 2 DESC;
 
--- 2.3 qual o Estado que mais tem valor_minimo
-SELECT
+-- 2.4 qual o Estado que mais tem valor_minimo
+SELECT 
     u.uf,
-    SUM(a.valor_minimo) as `soma_total`
+    SUM(a.valor_minimo) as `soma_anuncio`
 FROM
     usuarios u
     JOIN
     anuncios a ON u.id = a.usuario_id
-GROUP BY u.uf
+GROUP BY 1
 ORDER BY 2 DESC;
