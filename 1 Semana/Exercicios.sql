@@ -200,3 +200,68 @@ FROM
     anuncios a ON u.id = a.usuario_id
 GROUP BY 1
 ORDER BY 2 DESC;
+
+
+/* quinto dia, lidando com datas e concatenar */
+
+-- 1. Exibir a data de criacao do anuncio no padrao brasileiro, somente a data sem hora
+SELECT 
+    tipo,
+    CONCAT(DAY(data_criacao),
+            '/',
+            MONTH(data_criacao),
+            '/',
+            YEAR(data_criacao)) AS `data`
+FROM
+    anuncios;
+
+-- 2. qual o dia que mais tivemos anuncios
+SELECT 
+    COUNT(id) `qtd_anuncios`,
+    CONCAT(DAY(data_criacao)) AS `dia_com_mais_anuncios`
+FROM
+    anuncios
+GROUP BY 2
+ORDER BY 1 DESC
+LIMIT 1;
+
+-- 3. qual o mes que mais tivemos anuncios
+SELECT 
+    COUNT(id) `qtd_anuncios`,
+    CONCAT(MONTH(data_criacao)) AS `mes_com_mais_anuncios`
+FROM
+    anuncios
+GROUP BY 2
+ORDER BY 1 DESC
+LIMIT 1;
+
+-- 4 qual a hora que mais tivemos anuncios
+SELECT 
+    COUNT(id) `qtd_anuncios`,
+    CONCAT(HOUR(data_criacao)) AS `hora_com_mais_anuncios`
+FROM
+    anuncios
+GROUP BY 2
+ORDER BY 1 DESC
+LIMIT 1;
+
+
+-- 5 todos os anuncios que foram realizados no segundos semestre do ano corrente/2020
+SELECT
+    tipo, 
+    DATE_FORMAT(data_criacao, '%d/%m/%Y') AS `data`
+FROM
+    anuncios
+WHERE
+    MONTH(data_criacao) > 6
+    AND YEAR(data_criacao) = YEAR(CURDATE());
+
+
+-- 6 Qual o usuario que mais deu lance no sistema
+-- 7 qual o usuario que mais deu lances no sistema no primeiro semestre do ano corrente
+-- 8 qual o anuncio que mais teve lance
+-- 9 qual o anuncio que teve o lance mais caro
+-- 10 qual o anuncio que teve o lance mais barato
+-- 11 qual o anuncio que o anunciante deu pelo menos um lance no proprio anuncio
+-- 12 uma view por meio da qual consiga ver uma lista dos anuncios dos usuarios
+-- 13 uma view por meio da qual consiga ver os lances dos anuncios
