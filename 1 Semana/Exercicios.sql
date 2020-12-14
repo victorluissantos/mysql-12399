@@ -258,10 +258,108 @@ WHERE
 
 
 -- 6 Qual o usuario que mais deu lance no sistema
+SELECT 
+    u.nome,
+    COUNT(l.id) as `total`
+FROM
+    usuarios u
+        JOIN
+    lances l ON u.id = l.usuario_id
+GROUP BY u.id
+ORDER BY 2 DESC
+LIMIT 1;
+
 -- 7 qual o usuario que mais deu lances no sistema no primeiro semestre do ano corrente
+SELECT 
+    u.nome,
+    COUNT(l.id) as `total`
+FROM
+    usuarios u
+    JOIN
+    lances l ON u.id = l.usuario_id
+WHERE
+    YEAR(l.data) = YEAR(curdate())
+    AND
+    MONTH(l.data) < 7
+GROUP BY u.id
+ORDER BY 1 DESC
+LIMIT 1;
+
 -- 8 qual o anuncio que mais teve lance
+SELECT 
+    a.tipo,
+    a.titulo,
+    a.valor_minimo,
+    a.situacao,
+    COUNT(l.id) AS `total`
+FROM
+    anuncios a
+        JOIN
+    lances l ON a.id = l.anuncio_id
+GROUP BY a.id
+ORDER BY 5 DESC
+LIMIT 1;
+
 -- 9 qual o anuncio que teve o lance mais caro
+SELECT 
+    a.tipo,
+    a.titulo,
+    a.valor_minimo,
+    l.valor
+FROM
+    anuncios a
+    JOIN
+    lances l ON a.id = l.anuncio_id
+ORDER BY 4 DESC
+LIMIT 1;
+
 -- 10 qual o anuncio que teve o lance mais barato
+SELECT 
+    a.tipo,
+    a.titulo,
+    a.valor_minimo,
+    l.valor
+FROM
+    anuncios a
+    JOIN
+    lances l ON a.id = l.anuncio_id
+ORDER BY 4 ASC
+LIMIT 1;
+
 -- 11 qual o anuncio que o anunciante deu pelo menos um lance no proprio anuncio
+SELECT DISTINCT
+    a.*
+FROM
+    usuarios u
+        JOIN
+    anuncios a ON u.id = a.usuario_id
+        JOIN
+    lances l ON a.id = l.anuncio_id
+WHERE
+    u.id = l.usuario_id;
+
+
 -- 12 uma view por meio da qual consiga ver uma lista dos anuncios dos usuarios
+CREATE VIEW `usuarios_anuncios` AS
+    (SELECT 
+        u.nome, a.*
+    FROM
+        anuncios a
+            JOIN
+        usuarios u ON a.usuario_id = u.id);
+        
+SELECT * FROM usuarios_anuncios; -- testando a view
+
 -- 13 uma view por meio da qual consiga ver os lances dos anuncios
+CREATE VIEW `anuncios_lances` AS (
+    SELECT 
+        a.titulo,
+        a.tipo,
+        a.descricao,
+        l.*
+    FROM
+        lances l
+            JOIN
+        anuncios a ON l.anuncio_id = a.id);
+        
+SELECT * FROM anuncios_lances; -- testando
