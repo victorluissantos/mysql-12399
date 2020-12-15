@@ -60,6 +60,38 @@ BEGIN
 	RETURN idade;
 END
 
+/* Função de idade validando a data */
+CREATE DEFINER=`root`@`%` FUNCTION `getIdade`(data_nascimento DATE) RETURNS int(11)
+BEGIN
+    DECLARE idade INT DEFAULT 0;
+    DECLARE ano INT DEFAULT 0;
+    DECLARE mes INT DEFAULT 0;
+    DECLARE dia INT DEFAULT 0;
+    DECLARE cano INT DEFAULT 0;
+    DECLARE cmes INT DEFAULT 0;
+    DECLARE cdia INT DEFAULT 0;
+    
+    SET ano = YEAR(data_nascimento);
+    SET mes = MONTH(data_nascimento);
+    SET dia = DAY(data_nascimento);
+    
+    SET cano = YEAR(curdate());
+    SET cmes = MONTH(curdate());
+    SET cdia = DAY(curdate());
+    
+    IF cmes >= mes THEN
+		IF cdia >= dia THEN
+			SET idade = cano-ano;
+		ELSE
+			SET idade = cano-ano-1;
+        END IF;
+	ELSE
+		SET idade = cano-ano-1;
+    END IF;
+    
+	RETURN idade;
+END
+
 -- 4 qual o usuário mais velho do sistema
 SELECT 
     u.*,
