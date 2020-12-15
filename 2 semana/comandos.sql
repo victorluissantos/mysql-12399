@@ -20,3 +20,42 @@ SELECT
     IF(1 < 2,
         'primeira virgula',
         'Segunda virgula') AS `nosso_if`;
+
+/* create function */
+CREATE FUNCTION `soma` (valor_um INT, valor_dois INT)
+RETURNS INTEGER
+BEGIN
+	DECLARE resultados INT DEFAULT 0;
+    
+    SET resultados = valor_um+valor_dois;
+    
+	RETURN resultados;
+END
+
+
+/* Retorna a data do primeiro anuncio */
+
+CREATE FUNCTION `primeiro_anuncio` (pusuario_id INT)
+RETURNS DATE
+BEGIN
+
+	DECLARE data_anuncio DATE;
+    
+    SET data_anuncio = (SELECT 
+							a.data_criacao
+						FROM 
+							anuncios a 
+						WHERE 
+							usuario_id = pusuario_id
+						ORDER BY 1 ASC
+                        LIMIT 1);
+
+	RETURN data_anuncio;
+END
+
+/* Chamando a função */
+SELECT 
+    u.*, 
+    PRIMEIRO_ANUNCIO(u.id) as `primeiro_anuncio`
+FROM
+    usuarios u;
