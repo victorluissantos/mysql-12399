@@ -59,3 +59,8 @@ SELECT
     PRIMEIRO_ANUNCIO(u.id) as `primeiro_anuncio`
 FROM
     usuarios u;
+
+SELECT  ROUND(2020.2143, 2) AS `VALOR COM DUAS CASA`;
+    
+    
+-- ROUND(o valor que voce formatar, a quantidade de casas decimais)
