@@ -60,3 +60,22 @@ END
 -- 2. Criar uma função que receba um texto cmo o de descrição do produto e retorna o mesmo porém com somente a primeira letra em maiusculo
 -- Entrada: este modelo
 -- Saida: Este modelo
+CREATE FUNCTION `upFirst` (palavra VARCHAR(250))
+RETURNS VARCHAR(250)
+BEGIN
+    DECLARE primeira_letra VARCHAR(250) DEFAULT NULL;
+    DECLARE restante_palavra VARCHAR(250) DEFAULT NULL;
+    DECLARE palavra_formatada VARCHAR(250) DEFAULT NULL;
+    DECLARE qtd_caracter INT(11) DEFAULT 0;
+    
+    SET primeira_letra = SUBSTR(palavra, 1, 1); -- pegando a primeira letra
+    SET qtd_caracter = LENGTH(palavra); -- Contando a quantidade de caracteres
+    SET restante_palavra = SUBSTR(palavra, 2, qtd_caracter); -- Setando o restante da palavra
+    
+    SET primeira_letra = UPPER(primeira_letra); -- Deixando a primeira letra em maiusculo
+    SET restante_palavra = LOWER(restante_palavra); -- Deixando o restante em minusculo
+    
+    SET palavra_formatada = CONCAT(primeira_letra, restante_palavra); -- concatenando para formar a palavra original formatada
+    
+RETURN palavra_formatada;
+END
